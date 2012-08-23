@@ -252,10 +252,6 @@ ssize_t pwm_val_store(struct device *dev,
 	/* make sure new pwm duty is in range */
 	if(pwm_duty > pwm_duty_max) {
 		pwm_duty = pwm_duty_max;
-	}
-	else if (pwm_duty < pwm_duty_min) {
-		pwm_duty = pwm_duty_min;
-	}
 
 	pr_info("[VIB] %s: pwm_duty=%d\n", __func__, pwm_duty);
 
