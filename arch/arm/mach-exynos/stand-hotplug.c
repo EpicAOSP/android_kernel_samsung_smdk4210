@@ -321,16 +321,23 @@ static void hotplug_timer(struct work_struct *work)
 
 	/*cpu hotplug*/
 	if (flag_hotplug == HOTPLUG_IN && cpu_online(select_off_cpu) == CPU_OFF) {
+#ifndef PRODUCT_SHIP
 		DBG_PRINT("cpu%d turning on!\n", select_off_cpu);
+#endif
 		cpu_up(select_off_cpu);
+#ifndef PRODUCT_SHIP
 		DBG_PRINT("cpu%d on\n", select_off_cpu);
-		hotpluging_rate = check_rate_cpuon;
+#endif
+		hotpluging_rate = CHECK_DELAY_ON;
 	} else if (flag_hotplug == HOTPLUG_OUT && cpu_online(cpu_rq_min) == CPU_ON) {
+#ifndef PRODUCT_SHIP
 		DBG_PRINT("cpu%d turnning off!\n", cpu_rq_min);
+#endif
 		cpu_down(cpu_rq_min);
+#ifndef PRODUCT_SHIP
 		DBG_PRINT("cpu%d off!\n", cpu_rq_min);
-		if(!screen_off) hotpluging_rate = check_rate;
-		else hotpluging_rate = check_rate_scroff;
+#endif
+		hotpluging_rate = CHECK_DELAY_OFF;
 	} 
 
 no_hotplug:
